@@ -42,13 +42,14 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         final MainActivity mainActivity = (MainActivity)this.context;
         holder.imgIcon.setImageResource(current.getImageId());
         holder.title.setText(current.getTitle());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-	        @Override
-	        public void onClick(View v) {
-                    Toast.makeText(context, holder.title.getText().toString(), Toast.LENGTH_SHORT).show();
-                    mainActivity.GoToLocation(current.getLatLng(), current.getTitle());
+        holder.batteryLevel.setText(Integer.toString(current.getBatteryLevel()) + "%");
 
-	        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, holder.title.getText().toString(), Toast.LENGTH_SHORT).show();
+                mainActivity.GoToLocation(current.getLatLng(), current.getTitle());
+            }
         });
     }
 
@@ -62,11 +63,13 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title;
 	    ImageView imgIcon;
+        TextView batteryLevel;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
 	        imgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
+            batteryLevel = (TextView) itemView.findViewById(R.id.battery_level);
         }
     }
 }

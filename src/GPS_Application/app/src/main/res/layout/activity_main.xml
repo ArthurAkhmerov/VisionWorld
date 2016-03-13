@@ -11,6 +11,10 @@
 	<include
 		android:id="@+id/toolbar"
 		layout="@layout/toolbar"/>
+	<TextView
+		android:id="@+id/testTextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
 
 	<android.support.v4.widget.DrawerLayout
 		android:id="@+id/drawer_layout"

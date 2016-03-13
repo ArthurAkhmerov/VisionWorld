@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.example.arthurpc.gps_application.R;
-import com.example.arthurpc.gps_application.services.GetTrackersResponseHandler;
 import com.example.arthurpc.gps_application.services.NavixyService;
-import com.example.arthurpc.gps_application.services.dto.TrackerDTO;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,11 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends BaseAuthenticatedActivity implements OnMapReadyCallback {
-	//protected Toolbar toolbar;
-
-	private static final String TAG = "GPS_Application";
 	private GoogleMap mMap;
-	private NavixyService navixyService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +50,6 @@ public class MainActivity extends BaseAuthenticatedActivity implements OnMapRead
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
-
-
 	}
 
 	@Override
@@ -68,15 +59,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements OnMapRead
 		setUpToolbar();
 		setUpDrawer();
 
-		final MainActivity mainActivityTemp = this;
-
-		if(application.getTrackersDtos() == null) {
-			application.LoadTrackers(new GetTrackersResponseHandler() {
-				@Override
-				public void OnSuccess(final TrackerDTO[] trackers) {
-					mainActivityTemp.startActivity(new Intent(mainActivityTemp, MainActivity.class));
-				}
-			});
-		}
+		Intent serviceIntent = new Intent(this, NavixyService.class);
+		startService(serviceIntent);
 	}
 }

@@ -33,4 +33,8 @@ public class NavigationDrawerItem {
 	public int getImageId() {
 		return imageId;
 	}
+
+	public int getBatteryLevel() {
+		return batteryLevel;
+	}
 }

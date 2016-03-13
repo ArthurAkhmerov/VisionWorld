@@ -26,7 +26,7 @@ public class LoginNarrowActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
 
         String defaultUploadWebsite = getString(R.string.apiBaseAddress);
-        this.navixyService = new NavixyService(defaultUploadWebsite);
+        this.navixyService = new NavixyService();
 
         setContentView(R.layout.activity_login_narrow);
 
@@ -44,8 +44,8 @@ public class LoginNarrowActivity extends BaseActivity implements View.OnClickLis
         if (v == loginButton) {
             final NavixyService navixyServiceTemp = this.navixyService;
             final LoginNarrowActivity loginNarrowActivityTemp = this;
-            String login = usernameInput.getText().toString();
-            String password = passwordInput.getText().toString();
+            String login = "vladimir.chyorniy@gmail.com";//usernameInput.getText().toString();
+            String password = "rverempeli";//passwordInput.getText().toString();
 
             navixyService.Authorize(login, password, new AuthResponseHandler() {
                 @Override

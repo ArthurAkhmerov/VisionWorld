@@ -1,6 +1,5 @@
 package com.example.arthurpc.gps_application.model;
 
-
 import com.google.android.gms.maps.model.LatLng;
 
 public class Tracker {

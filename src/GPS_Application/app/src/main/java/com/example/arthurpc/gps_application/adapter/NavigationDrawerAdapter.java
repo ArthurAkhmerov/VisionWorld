@@ -48,7 +48,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, holder.title.getText().toString(), Toast.LENGTH_SHORT).show();
-                mainActivity.GoToLocation(current.getLatLng(), current.getTitle());
+                mainActivity.Move(current.getLatLng());
             }
         });
     }

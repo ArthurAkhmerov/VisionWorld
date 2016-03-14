@@ -12,10 +12,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseAuthenticatedActivity implements OnMapReadyCallback {
 	private GoogleMap mMap;
+	private List<Marker> markers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +41,30 @@ public class MainActivity extends BaseAuthenticatedActivity implements OnMapRead
 		drawerFragment.setUpDrawer(R.id.nav_drwr_fragment, drawerLayout, toolbar);
 	}
 
-	public void GoToLocation(LatLng latlng, String title) {
+	public void Move(LatLng latlng) {
 
 			SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map);
 			GoogleMap gmap = mapFragment.getMap();
 			if(gmap != null) {
-				gmap.addMarker(new MarkerOptions().position(latlng).title("Marker by " + title));
 				gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 12.0f));
 			}
+	}
+
+	public void AddMarker(LatLng latlng, String title) {
+
+		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map);
+		GoogleMap gmap = mapFragment.getMap();
+		if(gmap != null) {
+			if(markers == null) markers = new ArrayList<>();
+			for (Marker marker: markers){
+				if(marker.getPosition().equals(latlng))
+					return;
+			}
+			Marker marker = gmap.addMarker(new MarkerOptions().position(latlng).title("Marker by " + title));
+			markers.add(marker);
+		}
 	}
 
 	@Override

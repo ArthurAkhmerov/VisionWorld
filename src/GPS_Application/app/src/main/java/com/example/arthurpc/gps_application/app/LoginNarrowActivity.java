@@ -3,7 +3,6 @@ package com.example.arthurpc.gps_application.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,13 +43,15 @@ public class LoginNarrowActivity extends BaseActivity implements View.OnClickLis
         if (v == loginButton) {
             final NavixyService navixyServiceTemp = this.navixyService;
             final LoginNarrowActivity loginNarrowActivityTemp = this;
-            String login = "vladimir.chyorniy@gmail.com";//usernameInput.getText().toString();
-            String password = "rverempeli";//passwordInput.getText().toString();
+            final String login = usernameInput.getText().toString();
+            final String password = passwordInput.getText().toString();
 
             navixyService.Authorize(login, password, new AuthResponseHandler() {
                 @Override
                 protected void OnSuccess(final AuthResponseDTO authResult) {
                     application.getAuth().getUser().setLoggedIn(authResult.success);
+                    application.getAuth().getUser().setLogin(login);
+                    application.getAuth().getUser().setPassword(password);
                     application.getAuth().setHash(authResult.hash);
                     loginNarrowActivityTemp.startActivity(new Intent(loginNarrowActivityTemp, MainActivity.class));
                 }

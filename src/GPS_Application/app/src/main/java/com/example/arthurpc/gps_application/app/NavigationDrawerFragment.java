@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.arthurpc.gps_application.R;
 import com.example.arthurpc.gps_application.adapter.NavigationDrawerAdapter;
@@ -31,6 +32,8 @@ public class NavigationDrawerFragment extends Fragment {
 	private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private BroadcastReceiver receiver;
+    private TextView profileNameDisplay;
+    private GpsApplication gpsApplication;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class NavigationDrawerFragment extends Fragment {
 
 	    setUpRecyclerView(view);
 
+        profileNameDisplay = (TextView)view.findViewById(R.id.fragmet_navigation_drawer_profile_name);
+        gpsApplication = (GpsApplication)getActivity().getApplication();
+        String auth_user_login = gpsApplication.getAuth().getUser().getLogin();
+        profileNameDisplay.setText(auth_user_login.substring(0, auth_user_login.indexOf('@') == -1 ? auth_user_login.length() : auth_user_login.indexOf('@')));
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -71,6 +78,8 @@ public class NavigationDrawerFragment extends Fragment {
             for (Tracker tracker :trackers){
                 NavigationDrawerItem drawerItem = new NavigationDrawerItem(tracker.getLabel(), tracker.getImgId(), tracker.getLatLng(), tracker.getBatteryLevel());
                 items.add(drawerItem);
+                final MainActivity mainActivity = (MainActivity)this.getActivity();
+                mainActivity.AddMarker(tracker.getLatLng(), tracker.getLabel());
             }
 
             NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(getActivity(), items);
